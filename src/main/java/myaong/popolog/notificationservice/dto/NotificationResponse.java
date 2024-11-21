@@ -1,16 +1,21 @@
 package myaong.popolog.notificationservice.dto;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
+
 import java.util.List;
 
-@Data
+@Getter
+@Builder
 public class NotificationResponse {
-    private Long lastId;
-    private List<NotificationDto> notifications;
+    private final Long lastId;
+    private final List<NotificationDto> notifications;
 
-    // 생성자
-    public NotificationResponse(Long lastId, List<NotificationDto> notifications) {
-        this.lastId = lastId;
-        this.notifications = notifications;
+    // 정적 팩토리 메서드
+    public static NotificationResponse of(Long lastId, List<NotificationDto> notifications) {
+        return NotificationResponse.builder()
+                .lastId(lastId)
+                .notifications(notifications)
+                .build();
     }
 }

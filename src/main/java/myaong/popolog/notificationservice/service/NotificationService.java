@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,9 +27,6 @@ public class NotificationService {
     // 알림 조회
     @Transactional(readOnly = true)
     public NotificationResponse getNotifications(Long memberId, Long lastId) {
-        if (lastId < 0) {
-            throw new ApiException(ApiCode.INVALID_DATA);
-        }
 
         // 10개씩 페이징 처리
         Pageable pageable = PageRequest.of(0, 10);
@@ -40,10 +36,15 @@ public class NotificationService {
                 ? notificationPage.getContent().get(notificationPage.getContent().size() - 1).getId()
                 : -1;
 
-        return new NotificationResponse(nextLastId, notificationPage.stream()
-                .map(NotificationDto::fromEntity)
-                .collect(Collectors.toList()));
+        // NotificationResponse 빌더를 활용하여 반환
+        return NotificationResponse.of(
+                nextLastId,
+                notificationPage.stream()
+                        .map(NotificationDto::fromEntity)
+                        .collect(Collectors.toList())
+        );
     }
+
     @Transactional
     public void markNotificationAsRead(Long notificationId, Long memberId) {
         // 알림 조회
