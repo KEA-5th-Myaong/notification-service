@@ -1,4 +1,4 @@
-package myaong.popolog.notificationservice.dto;
+package myaong.popolog.notificationservice.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
