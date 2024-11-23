@@ -2,8 +2,10 @@ package myaong.popolog.notificationservice.service;
 
 import myaong.popolog.notificationservice.common.exception.ApiCode;
 import myaong.popolog.notificationservice.common.exception.ApiException;
-import myaong.popolog.notificationservice.dto.NotificationDto;
-import myaong.popolog.notificationservice.dto.NotificationResponse;
+import myaong.popolog.notificationservice.constant.NotificationType;
+import myaong.popolog.notificationservice.dto.request.NotificationRequest;
+import myaong.popolog.notificationservice.dto.response.NotificationDto;
+import myaong.popolog.notificationservice.dto.response.NotificationResponse;
 import myaong.popolog.notificationservice.entity.Notification;
 import myaong.popolog.notificationservice.repository.NotificationRepository;
 import org.springframework.data.domain.Page;
@@ -11,7 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,22 @@ public class NotificationService {
     public NotificationService(NotificationRepository notificationRepository) {
         this.notificationRepository = notificationRepository;
     }
+
+    // 알림 생성
+    @Transactional
+    public void createNotification(NotificationRequest request, NotificationType type, Long memberId) {
+        Notification notification = Notification.builder()
+                .memberId(request.getMemberId())
+                .title(request.getTitle())
+                .content(request.getContent())
+                .url(request.getUrl())
+                .type(type)
+                .isRead(false)
+                .build();
+
+        notificationRepository.save(notification);
+    }
+
 
     // 알림 조회
     @Transactional(readOnly = true)

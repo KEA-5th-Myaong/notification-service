@@ -3,8 +3,10 @@ package myaong.popolog.notificationservice.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.constraints.PositiveOrZero;
 import myaong.popolog.notificationservice.common.exception.ApiResponse;
+import myaong.popolog.notificationservice.constant.NotificationType;
+import myaong.popolog.notificationservice.dto.request.NotificationRequest;
 import myaong.popolog.notificationservice.service.NotificationService;
-import myaong.popolog.notificationservice.dto.NotificationResponse;
+import myaong.popolog.notificationservice.dto.response.NotificationResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,17 @@ public class NotificationController {
 
     public NotificationController(NotificationService notificationService) {
         this.notificationService = notificationService;
+    }
+
+    @Operation(summary = "API 명세서 v0.4 서비스간 API line 16", description = "알림 생성")
+    @PostMapping("/{type}")
+    public ResponseEntity<ApiResponse<Void>> createNotification(
+            @PathVariable String type,
+            @RequestBody NotificationRequest request,
+            @RequestHeader("memberId") Long memberId) {
+        NotificationType notificationType = NotificationType.fromLabel(type); // Enum 변환 및 검증
+        notificationService.createNotification(request, notificationType, memberId);
+        return ResponseEntity.ok(ApiResponse.onSuccess(null));
     }
 
     @Operation(summary = "API 명세서 v0.4 line 85", description = "알림 조회")

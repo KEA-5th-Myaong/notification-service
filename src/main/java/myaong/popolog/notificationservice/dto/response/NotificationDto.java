@@ -2,6 +2,7 @@ package myaong.popolog.notificationservice.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
+import myaong.popolog.notificationservice.constant.NotificationType;
 import myaong.popolog.notificationservice.entity.Notification;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ public class NotificationDto {
     private final String content;
     private final String url;
     private final Boolean isRead;
+    private final NotificationType type;
     private final LocalDateTime timestamp;
 
     // 정적 팩토리 메서드
@@ -24,6 +26,7 @@ public class NotificationDto {
                 .content(notification.getContent())
                 .url(notification.getUrl())
                 .isRead(notification.getIsRead())
+                .type(notification.getType())
                 .timestamp(notification.getCreatedAt())
                 .build();
     }

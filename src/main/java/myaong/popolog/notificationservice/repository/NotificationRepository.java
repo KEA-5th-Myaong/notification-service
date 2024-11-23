@@ -15,7 +15,5 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     @Modifying
     @Query("UPDATE Notification n SET n.isRead = true WHERE n.id = :notificationId")
     void markAsRead(Long notificationId);
-
-    // 30일이 지난 알림 삭제
-    void deleteByCreatedAtBefore(LocalDateTime threshold);
+    void deleteByCreatedAtBefore(LocalDateTime threshold); // 오래된 알림 삭제
 }

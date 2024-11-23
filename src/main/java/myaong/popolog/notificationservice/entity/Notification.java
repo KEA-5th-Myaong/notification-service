@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import myaong.popolog.notificationservice.constant.NotificationType;
 
 @Entity
 @Table(name = "`notification`")
@@ -33,16 +34,20 @@ public class Notification extends BaseEntity {
 	@Column(name = "url", nullable = false, updatable = false)
 	private String url;
 
+	@Enumerated(EnumType.STRING)
+	private NotificationType type; // 알림 타입 (Enum)
+
 	// 읽음 여부
 	@Column(name = "is_read", nullable = false)
 	private Boolean isRead;
 
 	@Builder
-	public Notification(Long memberId, String title, String content, String url, Boolean isRead) {
+	public Notification(Long memberId, String title, String content, String url, Boolean isRead, NotificationType type) {
 		this.memberId = memberId;
 		this.title = title;
 		this.content = content;
 		this.url = url;
 		this.isRead = isRead;
+		this.type = type;
 	}
 }
