@@ -22,7 +22,7 @@ public class NotificationService {
 
     private final NotificationRepository notificationRepository;
 
-    public NotificationService(NotificationRepository notificationRepository, MemberServiceFeignClient memberServiceFeignClient) {
+    public NotificationService(NotificationRepository notificationRepository) {
         this.notificationRepository = notificationRepository;
     }
     // TODO: 각 다른 유형의 알림을 전송받는 로직이 필요
