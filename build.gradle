@@ -46,6 +46,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
+    // spring cloud kubernetes
+    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-all' // discovery client, config client, LoadBalancer 사용
+
     // prometheus
     implementation 'io.micrometer:micrometer-registry-prometheus'
 
